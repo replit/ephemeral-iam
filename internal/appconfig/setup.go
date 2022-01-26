@@ -27,9 +27,9 @@ import (
 	"github.com/spf13/viper"
 	"google.golang.org/api/oauth2/v1"
 
-	util "github.com/rigup/ephemeral-iam/internal/eiamutil"
-	errorsutil "github.com/rigup/ephemeral-iam/internal/errors"
-	"github.com/rigup/ephemeral-iam/internal/gcpclient"
+	util "github.com/replit/ephemeral-iam/internal/eiamutil"
+	errorsutil "github.com/replit/ephemeral-iam/internal/errors"
+	"github.com/replit/ephemeral-iam/internal/gcpclient"
 )
 
 // Setup ensures that the prequisites for running ephemeral-iam are met.

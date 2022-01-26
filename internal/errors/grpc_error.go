@@ -23,7 +23,7 @@ import (
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/anypb"
 
-	util "github.com/rigup/ephemeral-iam/internal/eiamutil"
+	util "github.com/replit/ephemeral-iam/internal/eiamutil"
 )
 
 // gRPC error protobuf type names.

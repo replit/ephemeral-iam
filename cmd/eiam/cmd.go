@@ -18,8 +18,8 @@ import (
 	"github.com/lithammer/dedent"
 	"github.com/spf13/cobra"
 
-	eiam "github.com/rigup/ephemeral-iam/internal"
-	"github.com/rigup/ephemeral-iam/pkg/options"
+	eiam "github.com/replit/ephemeral-iam/internal"
+	"github.com/replit/ephemeral-iam/pkg/options"
 )
 
 // RootCommand is the top level cobra command.
@@ -38,7 +38,7 @@ func NewEphemeralIamCommand() (*eiam.RootCommand, error) {
 			│  A CLI tool for temporarily escalating GCP IAM privileges  │
 			│  to perform high privilege tasks.                          │
 			│                                                            │
-			│           https://github.com/rigup/ephemeral-iam           │
+			│           https://github.com/replit/ephemeral-iam           │
 			│                                                            │
 			╰────────────────────────────────────────────────────────────╯
 			
@@ -62,7 +62,7 @@ func NewEphemeralIamCommand() (*eiam.RootCommand, error) {
 			╰────────────────────────────────────────────────────────────╯
 		
 			Please report any bugs or feature requests by opening a new
-			issue at https://github.com/rigup/ephemeral-iam/issues
+			issue at https://github.com/replit/ephemeral-iam/issues
 		`),
 		SilenceErrors: true,
 		SilenceUsage:  true,

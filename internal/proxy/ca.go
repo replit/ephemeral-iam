@@ -30,7 +30,7 @@ import (
 
 	"github.com/elazarl/goproxy"
 
-	errorsutil "github.com/rigup/ephemeral-iam/internal/errors"
+	errorsutil "github.com/replit/ephemeral-iam/internal/errors"
 )
 
 // See https://github.com/rhaidiz/broxy/modules/coreproxy/coreproxy.go

@@ -10,11 +10,11 @@ import (
 	"github.com/spf13/viper"
 	"google.golang.org/api/iam/v1"
 
-	"github.com/rigup/ephemeral-iam/internal/appconfig"
-	util "github.com/rigup/ephemeral-iam/internal/eiamutil"
-	errorsutil "github.com/rigup/ephemeral-iam/internal/errors"
-	"github.com/rigup/ephemeral-iam/internal/gcpclient"
-	"github.com/rigup/ephemeral-iam/pkg/options"
+	"github.com/replit/ephemeral-iam/internal/appconfig"
+	util "github.com/replit/ephemeral-iam/internal/eiamutil"
+	errorsutil "github.com/replit/ephemeral-iam/internal/errors"
+	"github.com/replit/ephemeral-iam/internal/gcpclient"
+	"github.com/replit/ephemeral-iam/pkg/options"
 )
 
 var project string

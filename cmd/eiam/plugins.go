@@ -23,9 +23,9 @@ import (
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 
-	util "github.com/rigup/ephemeral-iam/internal/eiamutil"
-	errorsutil "github.com/rigup/ephemeral-iam/internal/errors"
-	"github.com/rigup/ephemeral-iam/internal/plugins"
+	util "github.com/replit/ephemeral-iam/internal/eiamutil"
+	errorsutil "github.com/replit/ephemeral-iam/internal/errors"
+	"github.com/replit/ephemeral-iam/internal/plugins"
 )
 
 func newCmdPlugins() *cobra.Command {

@@ -20,7 +20,7 @@ import (
 	credentials "cloud.google.com/go/iam/credentials/apiv1"
 	"google.golang.org/api/option"
 
-	errorsutil "github.com/rigup/ephemeral-iam/internal/errors"
+	errorsutil "github.com/replit/ephemeral-iam/internal/errors"
 )
 
 // ClientWithReason creates a client SDK with the provided reason field.

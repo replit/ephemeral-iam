@@ -19,7 +19,7 @@ import (
 
 	"github.com/sirupsen/logrus"
 
-	util "github.com/rigup/ephemeral-iam/internal/eiamutil"
+	util "github.com/replit/ephemeral-iam/internal/eiamutil"
 )
 
 // EiamError represents a generic ephemeral-iam error.

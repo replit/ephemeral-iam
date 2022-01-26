@@ -13,9 +13,9 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 
-	"github.com/rigup/ephemeral-iam/internal/appconfig"
-	util "github.com/rigup/ephemeral-iam/internal/eiamutil"
-	errorsutil "github.com/rigup/ephemeral-iam/internal/errors"
+	"github.com/replit/ephemeral-iam/internal/appconfig"
+	util "github.com/replit/ephemeral-iam/internal/eiamutil"
+	errorsutil "github.com/replit/ephemeral-iam/internal/errors"
 )
 
 // InstallPlugin attempts to install an ephemeral-iam plugin from a given Github repo.

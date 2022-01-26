@@ -22,7 +22,7 @@ import (
 	"github.com/google/go-github/v33/github"
 	"github.com/manifoldco/promptui"
 
-	util "github.com/rigup/ephemeral-iam/internal/eiamutil"
+	util "github.com/replit/ephemeral-iam/internal/eiamutil"
 )
 
 var (

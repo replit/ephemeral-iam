@@ -1,4 +1,4 @@
-module github.com/rigup/ephemeral-iam
+module github.com/replit/ephemeral-iam
 
 go 1.16
 

@@ -10,7 +10,7 @@ import (
 	"github.com/google/go-github/v33/github"
 	"golang.org/x/oauth2"
 
-	archutil "github.com/rigup/ephemeral-iam/internal/appconfig/arch_util"
+	archutil "github.com/replit/ephemeral-iam/internal/appconfig/arch_util"
 )
 
 func GetLatestRelease(repoOwner, repoName, token string) (*github.RepositoryRelease, error) {

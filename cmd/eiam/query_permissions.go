@@ -26,12 +26,12 @@ import (
 	"github.com/lithammer/dedent"
 	"github.com/spf13/cobra"
 
-	"github.com/rigup/ephemeral-iam/internal/appconfig"
-	util "github.com/rigup/ephemeral-iam/internal/eiamutil"
-	errorsutil "github.com/rigup/ephemeral-iam/internal/errors"
-	"github.com/rigup/ephemeral-iam/internal/gcpclient"
-	queryiam "github.com/rigup/ephemeral-iam/internal/gcpclient/query_iam"
-	"github.com/rigup/ephemeral-iam/pkg/options"
+	"github.com/replit/ephemeral-iam/internal/appconfig"
+	util "github.com/replit/ephemeral-iam/internal/eiamutil"
+	errorsutil "github.com/replit/ephemeral-iam/internal/errors"
+	"github.com/replit/ephemeral-iam/internal/gcpclient"
+	queryiam "github.com/replit/ephemeral-iam/internal/gcpclient/query_iam"
+	"github.com/replit/ephemeral-iam/pkg/options"
 )
 
 // Resource string templates.

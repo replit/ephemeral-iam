@@ -17,7 +17,7 @@ package options
 import (
 	"github.com/spf13/pflag"
 
-	util "github.com/rigup/ephemeral-iam/internal/eiamutil"
+	util "github.com/replit/ephemeral-iam/internal/eiamutil"
 )
 
 // Flag names and shorthands.

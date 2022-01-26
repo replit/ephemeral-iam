@@ -25,9 +25,9 @@ import (
 	"github.com/spf13/cobra"
 	"google.golang.org/api/iam/v1"
 
-	util "github.com/rigup/ephemeral-iam/internal/eiamutil"
-	"github.com/rigup/ephemeral-iam/internal/gcpclient"
-	"github.com/rigup/ephemeral-iam/pkg/options"
+	util "github.com/replit/ephemeral-iam/internal/eiamutil"
+	"github.com/replit/ephemeral-iam/internal/gcpclient"
+	"github.com/replit/ephemeral-iam/pkg/options"
 )
 
 var listCmdConfig options.CmdConfig

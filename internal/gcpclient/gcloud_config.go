@@ -28,8 +28,8 @@ import (
 	"github.com/spf13/viper"
 	"gopkg.in/ini.v1"
 
-	util "github.com/rigup/ephemeral-iam/internal/eiamutil"
-	errorsutil "github.com/rigup/ephemeral-iam/internal/errors"
+	util "github.com/replit/ephemeral-iam/internal/eiamutil"
+	errorsutil "github.com/replit/ephemeral-iam/internal/errors"
 )
 
 var (

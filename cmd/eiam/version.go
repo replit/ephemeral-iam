@@ -17,8 +17,8 @@ package eiam
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/rigup/ephemeral-iam/internal/appconfig"
-	util "github.com/rigup/ephemeral-iam/internal/eiamutil"
+	"github.com/replit/ephemeral-iam/internal/appconfig"
+	util "github.com/replit/ephemeral-iam/internal/eiamutil"
 )
 
 func newCmdVersion() *cobra.Command {

@@ -27,11 +27,11 @@ import (
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc/status"
 
-	"github.com/rigup/ephemeral-iam/internal/appconfig"
-	util "github.com/rigup/ephemeral-iam/internal/eiamutil"
-	errorsutil "github.com/rigup/ephemeral-iam/internal/errors"
-	"github.com/rigup/ephemeral-iam/internal/plugins"
-	eiamplugin "github.com/rigup/ephemeral-iam/pkg/plugins"
+	"github.com/replit/ephemeral-iam/internal/appconfig"
+	util "github.com/replit/ephemeral-iam/internal/eiamutil"
+	errorsutil "github.com/replit/ephemeral-iam/internal/errors"
+	"github.com/replit/ephemeral-iam/internal/plugins"
+	eiamplugin "github.com/replit/ephemeral-iam/pkg/plugins"
 )
 
 // RootCommand is a struct that holds the loaded plugins and the top level cobra command.

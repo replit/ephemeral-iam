@@ -17,7 +17,7 @@ package plugins
 import (
 	"context"
 
-	pb "github.com/rigup/ephemeral-iam/internal/plugins/proto"
+	pb "github.com/replit/ephemeral-iam/internal/plugins/proto"
 )
 
 // GRPCServer is the implementation of the go-plugin gRPC server.

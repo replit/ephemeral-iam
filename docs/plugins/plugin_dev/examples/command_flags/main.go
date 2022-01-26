@@ -18,7 +18,7 @@ import (
 	"github.com/hashicorp/go-hclog"
 	"github.com/spf13/cobra"
 
-	"github.com/rigup/ephemeral-iam/pkg/options"
+	"github.com/replit/ephemeral-iam/pkg/options"
 )
 
 const (

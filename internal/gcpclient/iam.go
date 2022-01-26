@@ -23,9 +23,9 @@ import (
 	"google.golang.org/api/iam/v1"
 	credentialspb "google.golang.org/genproto/googleapis/iam/credentials/v1"
 
-	util "github.com/rigup/ephemeral-iam/internal/eiamutil"
-	errorsutil "github.com/rigup/ephemeral-iam/internal/errors"
-	queryiam "github.com/rigup/ephemeral-iam/internal/gcpclient/query_iam"
+	util "github.com/replit/ephemeral-iam/internal/eiamutil"
+	errorsutil "github.com/replit/ephemeral-iam/internal/errors"
+	queryiam "github.com/replit/ephemeral-iam/internal/gcpclient/query_iam"
 )
 
 var (

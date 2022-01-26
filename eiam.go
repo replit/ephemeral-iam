@@ -15,9 +15,9 @@
 package main
 
 import (
-	"github.com/rigup/ephemeral-iam/cmd/eiam"
-	"github.com/rigup/ephemeral-iam/internal/appconfig"
-	errorsutil "github.com/rigup/ephemeral-iam/internal/errors"
+	"github.com/replit/ephemeral-iam/cmd/eiam"
+	"github.com/replit/ephemeral-iam/internal/appconfig"
+	errorsutil "github.com/replit/ephemeral-iam/internal/errors"
 )
 
 func main() {

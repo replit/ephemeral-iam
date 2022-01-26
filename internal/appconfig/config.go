@@ -24,9 +24,9 @@ import (
 
 	"github.com/spf13/viper"
 
-	archutil "github.com/rigup/ephemeral-iam/internal/appconfig/arch_util"
-	util "github.com/rigup/ephemeral-iam/internal/eiamutil"
-	errorsutil "github.com/rigup/ephemeral-iam/internal/errors"
+	archutil "github.com/replit/ephemeral-iam/internal/appconfig/arch_util"
+	util "github.com/replit/ephemeral-iam/internal/eiamutil"
+	errorsutil "github.com/replit/ephemeral-iam/internal/errors"
 )
 
 // The configuration key names.

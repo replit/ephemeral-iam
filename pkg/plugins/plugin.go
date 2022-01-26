@@ -20,8 +20,8 @@ import (
 	"github.com/hashicorp/go-plugin"
 	"google.golang.org/grpc"
 
-	"github.com/rigup/ephemeral-iam/internal/plugins"
-	pb "github.com/rigup/ephemeral-iam/internal/plugins/proto"
+	"github.com/replit/ephemeral-iam/internal/plugins"
+	pb "github.com/replit/ephemeral-iam/internal/plugins/proto"
 )
 
 var Handshake = plugin.HandshakeConfig{

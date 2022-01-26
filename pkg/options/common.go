@@ -147,22 +147,28 @@ func AddZoneFlag(fs *pflag.FlagSet, zone *string, required bool) {
 	}
 }
 
+// FixupServiceAccountEmail ensures that the service account email is set. This
+// is done after flags have been parsed so that we can choose the service
+// account associated with the selected project.
+func FixupServiceAccountEmail(project string, serviceAccountEmail *string) {
+	if serviceAccountEmail == nil || *serviceAccountEmail != "" {
+		return
+	}
+
+	defaultSAs := viper.GetStringMapString(appconfig.DefaultServiceAccounts)
+	if val, ok := defaultSAs[project]; ok {
+		*serviceAccountEmail = val
+	}
+}
+
 // AddServiceAccountEmailFlag adds the --service-account-email/-s flag.
 func AddServiceAccountEmailFlag(fs *pflag.FlagSet, serviceAccountEmail *string, required bool) {
-	defaultVal := ""
-	defaultSAs := viper.GetStringMapString(appconfig.DefaultServiceAccounts)
-	activeProject, err := gcpclient.GetCurrentProject()
-	errorsutil.CheckError(err)
-
-	if val, ok := defaultSAs[activeProject]; ok {
-		defaultVal = val
-	}
 	fs.StringVarP(
 		serviceAccountEmail,
 		ServiceAccountEmailFlag.Name,
 		ServiceAccountEmailFlag.Shorthand,
-		defaultVal,
-		"The email address for the service account. Defaults to the configured default account for the current project",
+		"",
+		"The email address for the service account. Defaults to the configured default account for the selected project",
 	)
 	if required {
 		if err := fs.SetAnnotation(ServiceAccountEmailFlag.Name, RequiredAnnotation, []string{"true"}); err != nil {

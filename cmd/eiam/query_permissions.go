@@ -127,6 +127,7 @@ func newCmdQueryComputeInstancePermissions() *cobra.Command {
 			    --service-account-email example@my-project.iam.gserviceaccount.com
 		`),
 		PreRunE: func(cmd *cobra.Command, args []string) error {
+			options.FixupServiceAccountEmail(queryPermsCmdConfig.Project, &queryPermsCmdConfig.ServiceAccountEmail)
 			if err := options.CheckRequired(cmd.Flags()); err != nil {
 				return err
 			}
@@ -183,6 +184,7 @@ func newCmdQueryProjectPermissions() *cobra.Command {
 		Short:   "Query the permissions you are granted at the project level",
 		Example: "  eiam query-permissions project",
 		PreRun: func(cmd *cobra.Command, args []string) {
+			options.FixupServiceAccountEmail(queryPermsCmdConfig.Project, &queryPermsCmdConfig.ServiceAccountEmail)
 			resourceString = fmt.Sprintf(projectsRes, queryPermsCmdConfig.Project)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -230,6 +232,7 @@ func newCmdQueryPubSubPermissions() *cobra.Command {
 			    --service-account-email example@my-project.iam.gserviceaccount.com
 		`),
 		PreRunE: func(cmd *cobra.Command, args []string) error {
+			options.FixupServiceAccountEmail(queryPermsCmdConfig.Project, &queryPermsCmdConfig.ServiceAccountEmail)
 			if err := options.CheckRequired(cmd.Flags()); err != nil {
 				return err
 			}
@@ -281,6 +284,7 @@ func newCmdQueryServiceAccountPermissions() *cobra.Command {
 			    --service-account-email example@my-project.iam.gserviceaccount.com
 		`),
 		PreRunE: func(cmd *cobra.Command, args []string) error {
+			options.FixupServiceAccountEmail(queryPermsCmdConfig.Project, &queryPermsCmdConfig.ServiceAccountEmail)
 			if err := options.CheckRequired(cmd.Flags()); err != nil {
 				return err
 			}
@@ -334,6 +338,7 @@ func newCmdQueryStorageBucketPermissions() *cobra.Command {
 			    --service-account-email example@my-project.iam.gserviceaccount.com
 		`),
 		PreRunE: func(cmd *cobra.Command, args []string) error {
+			options.FixupServiceAccountEmail(queryPermsCmdConfig.Project, &queryPermsCmdConfig.ServiceAccountEmail)
 			if err := options.CheckRequired(cmd.Flags()); err != nil {
 				return err
 			}

@@ -52,6 +52,7 @@ func newCmdCloudSQLProxy() *cobra.Command {
 		Args:               cobra.ArbitraryArgs,
 		FParseErrWhitelist: cobra.FParseErrWhitelist{UnknownFlags: true},
 		PreRunE: func(cmd *cobra.Command, args []string) error {
+			options.FixupServiceAccountEmail(cspCmdConfig.Project, &cspCmdConfig.ServiceAccountEmail)
 			if cloudSQLProxyPath = viper.GetString("binarypaths.cloudsqlproxy"); cloudSQLProxyPath == "" {
 				err := errors.New(`"cloud_sql_proxy": executable file not found in $PATH`)
 				return errorsutil.New("Failed to run cloud_sql_proxy command", err)

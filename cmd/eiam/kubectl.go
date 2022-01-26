@@ -53,6 +53,7 @@ func newCmdKubectl() *cobra.Command {
 		Args:               cobra.ArbitraryArgs,
 		FParseErrWhitelist: cobra.FParseErrWhitelist{UnknownFlags: true},
 		PreRunE: func(cmd *cobra.Command, args []string) error {
+			options.FixupServiceAccountEmail(kubectlCmdConfig.Project, &kubectlCmdConfig.ServiceAccountEmail)
 			if err := options.CheckRequired(cmd.Flags()); err != nil {
 				return err
 			}

@@ -45,6 +45,7 @@ func newCmdAssumePrivileges() *cobra.Command {
 				  --service-account-email example@my-project.iam.gserviceaccount.com \
 				  --reason "Emergency security patch (JIRA-1234)"`),
 		PreRunE: func(cmd *cobra.Command, args []string) error {
+			options.FixupServiceAccountEmail(apCmdConfig.Project, &apCmdConfig.ServiceAccountEmail)
 			if err := options.CheckRequired(cmd.Flags()); err != nil {
 				return err
 			}

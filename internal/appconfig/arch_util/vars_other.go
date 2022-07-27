@@ -17,7 +17,8 @@
 package archutil
 
 const (
-	FormattedOS = ""
+	FormattedArch = ""
+	FormattedOS   = ""
 )
 
 var configDir = ""

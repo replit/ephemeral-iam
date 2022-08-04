@@ -18,32 +18,37 @@ import (
 	"context"
 	"fmt"
 	"sync"
+	"time"
 
-	"github.com/golang/protobuf/ptypes/duration"
 	"google.golang.org/api/iam/v1"
 	credentialspb "google.golang.org/genproto/googleapis/iam/credentials/v1"
 
+	"github.com/golang/protobuf/ptypes/duration"
 	util "github.com/replit/ephemeral-iam/internal/eiamutil"
 	errorsutil "github.com/replit/ephemeral-iam/internal/errors"
 	queryiam "github.com/replit/ephemeral-iam/internal/gcpclient/query_iam"
 )
 
 var (
-	sessionDuration int64 = 600
-	ctx                   = context.Background()
+	ctx = context.Background()
 
 	wg sync.WaitGroup
 )
 
+const (
+	// DefaultTokenDuration is the default duration for tokens.
+	DefaultTokenDuration = 10 * time.Minute
+)
+
 // GenerateTemporaryAccessToken generates short-lived credentials for the given service account.
-func GenerateTemporaryAccessToken(svcAcct, reason string) (*credentialspb.GenerateAccessTokenResponse, error) {
+func GenerateTemporaryAccessToken(svcAcct, reason string, tokenDuration time.Duration) (*credentialspb.GenerateAccessTokenResponse, error) {
 	client, err := ClientWithReason(reason)
 	if err != nil {
 		return nil, err
 	}
 
 	sessionDuration := &duration.Duration{
-		Seconds: sessionDuration, // Expire after 10 minutes.
+		Seconds: int64(tokenDuration.Seconds()),
 	}
 
 	req := credentialspb.GenerateAccessTokenRequest{

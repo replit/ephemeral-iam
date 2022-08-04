@@ -50,6 +50,10 @@ func newCmdAssumePrivileges() *cobra.Command {
 				return err
 			}
 
+			if err := options.CheckTokenDuration(apCmdConfig.TokenDuration); err != nil {
+				return err
+			}
+
 			if err := util.FormatReason(&apCmdConfig.Reason); err != nil {
 				return err
 			}
@@ -71,6 +75,7 @@ func newCmdAssumePrivileges() *cobra.Command {
 	options.AddServiceAccountEmailFlag(cmd.Flags(), &apCmdConfig.ServiceAccountEmail, true)
 	options.AddReasonFlag(cmd.Flags(), &apCmdConfig.Reason, true)
 	options.AddProjectFlag(cmd.Flags(), &apCmdConfig.Project, false)
+	options.AddTokenDurationFlag(cmd.Flags(), &apCmdConfig.TokenDuration, false)
 
 	return cmd
 }
@@ -84,7 +89,7 @@ func startPrivilegedSession() error {
 	}
 
 	util.Logger.Info("Fetching short-lived access token for ", apCmdConfig.ServiceAccountEmail)
-	accessToken, err := gcpclient.GenerateTemporaryAccessToken(apCmdConfig.ServiceAccountEmail, apCmdConfig.Reason)
+	accessToken, err := gcpclient.GenerateTemporaryAccessToken(apCmdConfig.ServiceAccountEmail, apCmdConfig.Reason, apCmdConfig.TokenDuration)
 	if err != nil {
 		return err
 	}

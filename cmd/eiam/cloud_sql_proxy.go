@@ -62,6 +62,10 @@ func newCmdCloudSQLProxy() *cobra.Command {
 				return err
 			}
 
+			if err := options.CheckTokenDuration(cspCmdConfig.TokenDuration); err != nil {
+				return err
+			}
+
 			cloudSQLProxyCmdArgs = util.ExtractUnknownArgs(cmd.Flags(), os.Args)
 			if err := util.FormatReason(&cspCmdConfig.Reason); err != nil {
 				return err
@@ -85,6 +89,7 @@ func newCmdCloudSQLProxy() *cobra.Command {
 	options.AddServiceAccountEmailFlag(cmd.Flags(), &cspCmdConfig.ServiceAccountEmail, true)
 	options.AddReasonFlag(cmd.Flags(), &cspCmdConfig.Reason, true)
 	options.AddProjectFlag(cmd.Flags(), &cspCmdConfig.Project, false)
+	options.AddTokenDurationFlag(cmd.Flags(), &cspCmdConfig.TokenDuration, false)
 
 	return cmd
 }
@@ -98,7 +103,7 @@ func runCloudSQLProxyCommand() error {
 	}
 
 	util.Logger.Infof("Fetching access token for %s", cspCmdConfig.ServiceAccountEmail)
-	accessToken, err := gcpclient.GenerateTemporaryAccessToken(cspCmdConfig.ServiceAccountEmail, cspCmdConfig.Reason)
+	accessToken, err := gcpclient.GenerateTemporaryAccessToken(cspCmdConfig.ServiceAccountEmail, cspCmdConfig.Reason, cspCmdConfig.TokenDuration)
 	if err != nil {
 		return err
 	}

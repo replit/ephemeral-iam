@@ -58,6 +58,10 @@ func newCmdKubectl() *cobra.Command {
 				return err
 			}
 
+			if err := options.CheckTokenDuration(kubectlCmdConfig.TokenDuration); err != nil {
+				return err
+			}
+
 			kubectlCmdArgs = util.ExtractUnknownArgs(cmd.Flags(), os.Args)
 			if err := util.FormatReason(&kubectlCmdConfig.Reason); err != nil {
 				return err
@@ -81,6 +85,7 @@ func newCmdKubectl() *cobra.Command {
 	options.AddServiceAccountEmailFlag(cmd.Flags(), &kubectlCmdConfig.ServiceAccountEmail, true)
 	options.AddReasonFlag(cmd.Flags(), &kubectlCmdConfig.Reason, true)
 	options.AddProjectFlag(cmd.Flags(), &kubectlCmdConfig.Project, false)
+	options.AddTokenDurationFlag(cmd.Flags(), &kubectlCmdConfig.TokenDuration, false)
 
 	return cmd
 }
@@ -97,6 +102,7 @@ func runKubectlCommand() error {
 	accessToken, err := gcpclient.GenerateTemporaryAccessToken(
 		kubectlCmdConfig.ServiceAccountEmail,
 		kubectlCmdConfig.Reason,
+		kubectlCmdConfig.TokenDuration,
 	)
 	if err != nil {
 		return err

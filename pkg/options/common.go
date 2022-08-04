@@ -17,6 +17,7 @@ package options
 import (
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/pflag"
@@ -60,6 +61,9 @@ var (
 
 	// ZoneFlag sets the GCP zone to use for a command.
 	ZoneFlag = flagName{"zone", "z"}
+
+	// TokenDurationFlag sets the token duration for a command.
+	TokenDurationFlag = flagName{"duration", "d"}
 )
 
 type flagName struct {
@@ -77,6 +81,7 @@ type CmdConfig struct {
 	ServiceAccountEmail string
 	StorageBucket       string
 	Zone                string
+	TokenDuration       time.Duration
 }
 
 // AddPersistentFlags add persistent flags to the root command.
@@ -191,6 +196,31 @@ func AddReasonFlag(fs *pflag.FlagSet, reason *string, required bool) {
 			util.Logger.Fatalf("failed to set required annotation on flag: %v", err)
 		}
 	}
+}
+
+// AddTokenDurationFlag adds the --duration flag.
+func AddTokenDurationFlag(fs *pflag.FlagSet, tokenDuration *time.Duration, required bool) {
+	fs.DurationVarP(
+		tokenDuration,
+		TokenDurationFlag.Name,
+		TokenDurationFlag.Shorthand,
+		gcpclient.DefaultTokenDuration,
+		"The duration of the token. Defaults to 10m, cannot be longer than 1h",
+	)
+	if required {
+		if err := fs.SetAnnotation(TokenDurationFlag.Name, RequiredAnnotation, []string{"true"}); err != nil {
+			util.Logger.Fatalf("failed to set required annotation on flag: %v", err)
+		}
+	}
+}
+
+// CheckTokenDuration ensures that the token duration is not excessively long.
+func CheckTokenDuration(tokenDuration time.Duration) error {
+	if tokenDuration > time.Hour {
+		return fmt.Errorf("token duration (%v) exceeds maximum (%v)", tokenDuration, time.Hour)
+	}
+
+	return nil
 }
 
 // CheckRequired ensures that a command's required flags have been set. The only

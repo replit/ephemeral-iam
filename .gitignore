@@ -53,3 +53,9 @@ override.tf.json
 
 # Ignore local testing scripts
 scripts/
+
+# Ignore direnv
+.direnv
+
+# Ignore nix output
+result

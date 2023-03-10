@@ -168,6 +168,10 @@ func writeCredsToKubeConfig(tmpKubeConfig *os.File, accessToken, expiry string) 
 
 	// There should only be one, this is an efficient way of getting it.
 	for _, authInfo := range config.AuthInfos {
+		if authInfo.AuthProvider == nil {
+			util.Logger.Infof("No authprovider on authInfo in config, skipping.")
+			continue	
+		}
 		// Write the service account's token to the temp kubeconfig.
 		authInfo.AuthProvider.Config["access-token"] = accessToken
 		authInfo.AuthProvider.Config["expiry"] = expiry

@@ -41,7 +41,11 @@ const (
 )
 
 // GenerateTemporaryAccessToken generates short-lived credentials for the given service account.
-func GenerateTemporaryAccessToken(svcAcct, reason string, tokenDuration time.Duration) (*credentialspb.GenerateAccessTokenResponse, error) {
+func GenerateTemporaryAccessToken(
+	svcAcct,
+	reason string,
+	tokenDuration time.Duration,
+) (*credentialspb.GenerateAccessTokenResponse, error) {
 	client, err := ClientWithReason(reason)
 	if err != nil {
 		return nil, err

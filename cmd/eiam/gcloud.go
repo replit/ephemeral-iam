@@ -62,8 +62,6 @@ func newCmdGcloud() *cobra.Command {
 				return err
 			}
 
-
-
 			if !options.YesOption {
 				util.Confirm(map[string]string{
 					"Project":         gcloudCmdConfig.Project,
@@ -101,15 +99,15 @@ func runGcloudCommand() error {
 	// There has to be a better way to do this...
 	util.Logger.Infof("Running: [gcloud %s]\n\n", strings.Join(gcloudCmdArgs, " "))
 
-    gcloudOpts := gcloudCmdArgs
-    positionalArgs := []string{}
-    for i, v := range gcloudCmdArgs {
-        if v == "--" {
-            gcloudOpts = gcloudCmdArgs[:i]
-            positionalArgs = gcloudCmdArgs[i:]
-            break
-        }
-    }
+	gcloudOpts := gcloudCmdArgs
+	positionalArgs := []string{}
+	for i, v := range gcloudCmdArgs {
+		if v == "--" {
+			gcloudOpts = gcloudCmdArgs[:i]
+			positionalArgs = gcloudCmdArgs[i:]
+			break
+		}
+	}
 
 	cmdArgs := append([]string(nil), gcloudOpts...)
 	cmdArgs = append(cmdArgs, "--impersonate-service-account", gcloudCmdConfig.ServiceAccountEmail, "--verbosity=error")

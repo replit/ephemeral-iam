@@ -39,25 +39,27 @@ import (
 )
 
 func startShell(svcAcct, accessToken, expiry string, defaultCluster map[string]string, oldState **term.State) {
-	tmpKubeConfig, err := createTempKubeConfig()
-	if err != nil {
-		util.Logger.WithError(err).Fatal("failed to create temp kubeconfig")
-	}
-	defer os.Remove(tmpKubeConfig.Name()) // Remove tmpKubeConfig after priv session ends.
-
 	// Copy environment variables from user, set PS1 prompt, and set the KUBECONFIG env var.
 	cmdEnv := append(
 		os.Environ(),
 		buildPrompt(svcAcct),
-		fmt.Sprintf("KUBECONFIG=%s", tmpKubeConfig.Name()),
-		// The Terraform provider can source this config from this environment variable.
-		fmt.Sprintf("KUBE_CONFIG_PATH=%s", tmpKubeConfig.Name()),
 		// The Terraform provider can source this and use it as the access token.
 		fmt.Sprintf("GOOGLE_OAUTH_ACCESS_TOKEN=%s", accessToken),
 	)
 
 	if len(defaultCluster) > 0 {
-		// Create the kubeconfig entry for the privileged service account.
+		tmpKubeConfig, err := createTempKubeConfig()
+		if err != nil {
+			util.Logger.WithError(err).Fatal("failed to create temp kubeconfig")
+		}
+		defer os.Remove(tmpKubeConfig.Name()) // Remove tmpKubeConfig after priv session ends.
+		cmdEnv = append(
+			cmdEnv,
+			fmt.Sprintf("KUBECONFIG=%s", tmpKubeConfig.Name()),
+			// The Terraform provider can source this config from this environment variable.
+			fmt.Sprintf("KUBE_CONFIG_PATH=%s", tmpKubeConfig.Name()),
+			// Create the kubeconfig entry for the privileged service account.
+		)
 		c := exec.Command( //nolint:gosec  // This would just get you code exec on your own computer
 			"gcloud", "container", "clusters", "get-credentials", defaultCluster["name"],
 			"--zone", defaultCluster["location"],
@@ -71,10 +73,9 @@ func startShell(svcAcct, accessToken, expiry string, defaultCluster map[string]s
 		} else {
 			util.Logger.Infof("kubectl is now authenticated as %s", svcAcct)
 		}
-	}
-
-	if err = writeCredsToKubeConfig(tmpKubeConfig, accessToken, expiry); err != nil {
-		util.Logger.WithError(err).Fatal("failed to write credentials to temp kubeconfig")
+		if err = writeCredsToKubeConfig(tmpKubeConfig, accessToken, expiry); err != nil {
+			util.Logger.WithError(err).Fatal("failed to write credentials to temp kubeconfig")
+		}
 	}
 
 	// Create the shell command and copy the environment variables from the previous command.
@@ -170,7 +171,7 @@ func writeCredsToKubeConfig(tmpKubeConfig *os.File, accessToken, expiry string) 
 	for _, authInfo := range config.AuthInfos {
 		if authInfo.AuthProvider == nil {
 			util.Logger.Infof("No authprovider on authInfo in config, skipping.")
-			continue	
+			continue
 		}
 		// Write the service account's token to the temp kubeconfig.
 		authInfo.AuthProvider.Config["access-token"] = accessToken

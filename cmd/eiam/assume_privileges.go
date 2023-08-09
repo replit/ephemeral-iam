@@ -89,7 +89,10 @@ func startPrivilegedSession() error {
 	}
 
 	util.Logger.Info("Fetching short-lived access token for ", apCmdConfig.ServiceAccountEmail)
-	accessToken, err := gcpclient.GenerateTemporaryAccessToken(apCmdConfig.ServiceAccountEmail, apCmdConfig.Reason, apCmdConfig.TokenDuration)
+	accessToken, err := gcpclient.GenerateTemporaryAccessToken(
+		apCmdConfig.ServiceAccountEmail,
+		apCmdConfig.Reason,
+		apCmdConfig.TokenDuration)
 	if err != nil {
 		return err
 	}
@@ -99,38 +102,40 @@ func startPrivilegedSession() error {
 		return err
 	}
 
-	clusters, err := gcpclient.GetClusters(apCmdConfig.Project, apCmdConfig.Reason)
-	if err != nil {
-		return err
-	}
-
 	defaultCluster := map[string]string{}
-	if len(clusters) == 0 {
-		util.Logger.Warnf("No clusters found in %s", apCmdConfig.Project)
-	} else if len(clusters) == 1 {
-		defaultCluster = clusters[0]
-	} else {
-		clusterNames := []string{}
-		for _, cl := range clusters {
-			clusterNames = append(clusterNames, cl["name"])
-		}
-		prompt := promptui.Select{
-			Label: "Select the default cluster to use",
-			Items: clusterNames,
+	if options.KubeConfigSetupOption {
+		clusters, err := gcpclient.GetClusters(apCmdConfig.Project, apCmdConfig.Reason)
+		if err != nil {
+			return err
 		}
 
-		_, result, err := prompt.Run()
-		if err != nil {
-			util.Logger.Warn("No cluster default cluster will be configured")
+		if len(clusters) == 0 {
+			util.Logger.Warnf("No clusters found in %s", apCmdConfig.Project)
+		} else if len(clusters) == 1 {
+			defaultCluster = clusters[0]
 		} else {
+			clusterNames := []string{}
 			for _, cl := range clusters {
-				if cl["name"] == result {
-					defaultCluster = cl
-					break
-				}
+				clusterNames = append(clusterNames, cl["name"])
 			}
-			if defaultCluster == nil {
-				util.Logger.Warnf("Invalid cluster name selected: %s", result)
+			prompt := promptui.Select{
+				Label: "Select the default cluster to use",
+				Items: clusterNames,
+			}
+
+			_, result, err := prompt.Run()
+			if err != nil {
+				util.Logger.Warn("No cluster default cluster will be configured")
+			} else {
+				for _, cl := range clusters {
+					if cl["name"] == result {
+						defaultCluster = cl
+						break
+					}
+				}
+				if defaultCluster == nil {
+					util.Logger.Warnf("Invalid cluster name selected: %s", result)
+				}
 			}
 		}
 	}

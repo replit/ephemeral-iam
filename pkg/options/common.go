@@ -36,7 +36,8 @@ const (
 
 // YesOption designates whether to prompt for confirmation or not.
 var (
-	YesOption = false
+	YesOption             = false
+	KubeConfigSetupOption = false
 )
 
 // Flag names and shorthands.
@@ -64,6 +65,9 @@ var (
 
 	// TokenDurationFlag sets the token duration for a command.
 	TokenDurationFlag = flagName{"duration", "d"}
+
+	// KubeSetupFlag sets the token duration for a command.
+	KubeConfigSetupFlag = flagName{"set-kube-config-envs", "k"}
 )
 
 type flagName struct {
@@ -87,6 +91,12 @@ type CmdConfig struct {
 // AddPersistentFlags add persistent flags to the root command.
 func AddPersistentFlags(fs *pflag.FlagSet) {
 	fs.BoolVarP(&YesOption, YesFlag.Name, YesFlag.Shorthand, YesOption, "Assume 'yes' to all prompts")
+	fs.BoolVarP(
+		&KubeConfigSetupOption,
+		KubeConfigSetupFlag.Name,
+		KubeConfigSetupFlag.Shorthand,
+		KubeConfigSetupOption,
+		"Set kube config envvars")
 
 	currLogFmt := viper.GetString(appconfig.LoggingFormat)
 	fs.StringP(FormatFlag.Name, FormatFlag.Shorthand, currLogFmt, "Set the output of the current command")

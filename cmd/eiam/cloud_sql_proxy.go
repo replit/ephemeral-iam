@@ -103,7 +103,10 @@ func runCloudSQLProxyCommand() error {
 	}
 
 	util.Logger.Infof("Fetching access token for %s", cspCmdConfig.ServiceAccountEmail)
-	accessToken, err := gcpclient.GenerateTemporaryAccessToken(cspCmdConfig.ServiceAccountEmail, cspCmdConfig.Reason, cspCmdConfig.TokenDuration)
+	accessToken, err := gcpclient.GenerateTemporaryAccessToken(
+		cspCmdConfig.ServiceAccountEmail,
+		cspCmdConfig.Reason,
+		cspCmdConfig.TokenDuration)
 	if err != nil {
 		return err
 	}

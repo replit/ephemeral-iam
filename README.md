@@ -214,3 +214,6 @@ Global Flags:
 ### Tutorial
 To better familiarize yourself with `ephemeral-iam` and how it works, you can
 follow [the tutorial provided in the documentation](docs/tutorial).
+
+### Known issuies
+If `eiam` crashes you might need to set `export USE_GKE_GCLOUD_AUTH_PLUGIN=False`

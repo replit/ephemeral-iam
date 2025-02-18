@@ -123,6 +123,10 @@ func (h *HCLogAdapter) SetLevel(level hclog.Level) {
 	h.log.SetLevel(convertLevel(level))
 }
 
+func (h *HCLogAdapter) GetLevel() hclog.Level {
+	return toHclogLevel(h.log.GetLevel())
+}
+
 func (h HCLogAdapter) StandardLogger(opts *hclog.StandardLoggerOptions) *log.Logger {
 	if opts == nil {
 		opts = &hclog.StandardLoggerOptions{}
@@ -152,6 +156,24 @@ func convertLevel(level hclog.Level) logrus.Level {
 		return logrus.ErrorLevel
 	default:
 		return logrus.InfoLevel
+	}
+}
+
+// toHclogLevel maps logrus levels to hclog levels.
+func toHclogLevel(level logrus.Level) hclog.Level {
+	switch level {
+	case logrus.InfoLevel:
+		return hclog.Info
+	case logrus.TraceLevel:
+		return hclog.Trace
+	case logrus.DebugLevel:
+		return hclog.Debug
+	case logrus.WarnLevel:
+		return hclog.Warn
+	case logrus.ErrorLevel:
+		return hclog.Error
+	default:
+		return hclog.Info
 	}
 }
 

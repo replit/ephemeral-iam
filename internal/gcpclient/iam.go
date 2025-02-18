@@ -22,8 +22,8 @@ import (
 
 	"google.golang.org/api/iam/v1"
 	credentialspb "google.golang.org/genproto/googleapis/iam/credentials/v1"
+	"google.golang.org/protobuf/types/known/durationpb"
 
-	"github.com/golang/protobuf/ptypes/duration"
 	util "github.com/replit/ephemeral-iam/internal/eiamutil"
 	errorsutil "github.com/replit/ephemeral-iam/internal/errors"
 	queryiam "github.com/replit/ephemeral-iam/internal/gcpclient/query_iam"
@@ -51,7 +51,7 @@ func GenerateTemporaryAccessToken(
 		return nil, err
 	}
 
-	sessionDuration := &duration.Duration{
+	sessionDuration := &durationpb.Duration{
 		Seconds: int64(tokenDuration.Seconds()),
 	}
 

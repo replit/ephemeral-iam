@@ -15,7 +15,8 @@ linters-settings:
     lines: 100
     statements: 50
   gci:
-    local-prefixes: github.com/rigup/ephemeral-iam
+    sections:
+     - prefix(github.com/rigup/ephemeral-iam)
   goconst:
     min-len: 2
     min-occurrences: 2
@@ -44,7 +45,7 @@ linters-settings:
       - FIXME
       - NOTE
       - OPTIMIZE # marks code that should be optimized before merging
-      - HACK # marks hack-arounds that should be removed before merging  
+      - HACK # marks hack-arounds that should be removed before merging
   goimports:
     local-prefixes: github.com/rigup/ephemeral-iam
   golint:
@@ -53,8 +54,6 @@ linters-settings:
     settings:
       mnd:
         checks: argument,case,return
-  govet:
-    check-shadowing: true
   ifshort:
     max-decl-lines: 1
     # Maximum length of variable declaration measured in number of characters, after which linter won't suggest using short syntax.
@@ -78,12 +77,10 @@ linters:
   disable-all: true
   enable:
     - bodyclose
-    - deadcode
     - depguard
     - dogsled
     - dupl
     - errcheck
-    - exportloopref
     - exhaustive
     - funlen
     - goconst
@@ -94,7 +91,6 @@ linters:
     # - godox
     - gofmt
     - goimports
-    - golint
     #- gomnd failing with magic numbers
     - goprintffuncname
     - gosec
@@ -108,13 +104,11 @@ linters:
     - nolintlint
     - rowserrcheck
     - staticcheck
-    - structcheck
     - stylecheck
     - typecheck
     - unconvert
     - unparam
     - unused
-    - varcheck
     - whitespace
     # don't enable:
     # - asciicheck
@@ -144,7 +138,7 @@ run:
 ###############################################################################
 output:
   # colored-line-number|line-number|json|tab|checkstyle|code-climate|junit-xml|github-actions
-  format: tab
+  formats: tab
   sort-results: true
 
 ###############################################################################

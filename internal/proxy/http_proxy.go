@@ -154,8 +154,12 @@ func createProxy(accessToken, reason string) (*http.Server, error) {
 	})
 
 	srv := &http.Server{
-		Addr:    fmt.Sprintf("%s:%s", viper.GetString(appconfig.AuthProxyAddress), viper.GetString(appconfig.AuthProxyPort)),
-		Handler: proxy,
+		Addr: fmt.Sprintf(
+			"%s:%s",
+			viper.GetString(appconfig.AuthProxyAddress),
+			viper.GetString(appconfig.AuthProxyPort)),
+		Handler:           proxy,
+		ReadHeaderTimeout: 5 * time.Second,
 	}
 	return srv, nil
 }

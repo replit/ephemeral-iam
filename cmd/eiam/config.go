@@ -17,7 +17,7 @@ package eiam
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"os"
 	"strconv"
 	"strings"
 
@@ -117,7 +117,7 @@ func newCmdConfigPrint() *cobra.Command {
 		Short: "Print the current configuration",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			configFile := viper.ConfigFileUsed()
-			data, err := ioutil.ReadFile(configFile)
+			data, err := os.ReadFile(configFile)
 			if err != nil {
 				return errorsutil.New("Failed to read configuration file", err)
 			}
@@ -162,7 +162,7 @@ func newCmdConfigView() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:       "view",
 		Short:     "View the value of a provided config item",
-		Args:      cobra.ExactValidArgs(1),
+		Args:      cobra.MatchAll(cobra.ExactArgs(1), cobra.OnlyValidArgs),
 		ValidArgs: viper.AllKeys(),
 		Run: func(cmd *cobra.Command, args []string) {
 			val := viper.Get(args[0])

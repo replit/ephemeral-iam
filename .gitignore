@@ -59,3 +59,4 @@ scripts/
 
 # Ignore nix output
 result
+/ephemeral-iam

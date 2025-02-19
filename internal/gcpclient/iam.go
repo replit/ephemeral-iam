@@ -20,8 +20,8 @@ import (
 	"sync"
 	"time"
 
+	"cloud.google.com/go/iam/credentials/apiv1/credentialspb"
 	"google.golang.org/api/iam/v1"
-	credentialspb "google.golang.org/genproto/googleapis/iam/credentials/v1"
 	"google.golang.org/protobuf/types/known/durationpb"
 
 	util "github.com/replit/ephemeral-iam/internal/eiamutil"

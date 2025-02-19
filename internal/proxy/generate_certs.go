@@ -22,7 +22,6 @@ import (
 	"crypto/x509/pkix"
 	"encoding/pem"
 	"fmt"
-	"io/ioutil"
 	"math/big"
 	"os"
 	"path/filepath"
@@ -196,7 +195,7 @@ func readCert(certFile string) (cert *x509.Certificate, err error) {
 	var certBytes []byte
 	var certBlock *pem.Block
 
-	if certBytes, err = ioutil.ReadFile(certFile); err != nil {
+	if certBytes, err = os.ReadFile(certFile); err != nil {
 		return nil, errorsutil.New("Failed to read certificate file", err)
 	}
 	if certBlock, _ = pem.Decode(certBytes); certBlock == nil {

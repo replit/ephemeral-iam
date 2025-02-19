@@ -43,6 +43,8 @@ type HCLogAdapter struct {
 
 func (h HCLogAdapter) Log(level hclog.Level, msg string, args ...interface{}) {
 	switch level {
+	case hclog.Off:
+		return
 	case hclog.NoLevel:
 		return
 	case hclog.Trace:

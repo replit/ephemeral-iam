@@ -3,7 +3,6 @@ package plugins
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 
@@ -64,7 +63,7 @@ func installDownloadedPlugin(tmpDir string) error {
 	pluginDir := filepath.Join(appconfig.GetConfigDir(), "plugins")
 	for _, file := range files {
 		fp := filepath.Join(tmpDir, file.Name())
-		buf, err := ioutil.ReadFile(fp)
+		buf, err := os.ReadFile(fp)
 		if err != nil {
 			return errorsutil.New("Failed to read file downloaded in release", err)
 		}

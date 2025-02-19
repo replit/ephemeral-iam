@@ -7,9 +7,11 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"math"
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 func MoveFile(src, dst string) error {
@@ -36,10 +38,17 @@ func MoveFile(src, dst string) error {
 	return nil
 }
 
+func safeInt64ToUint32(num int64) (uint32, error) {
+	if num < 0 || num > math.MaxUint32 {
+		return 0, fmt.Errorf("value %d out of range for uint32", num)
+	}
+	return uint32(num), nil
+}
+
 func DownloadAndExtract(url, tmpDir, token string) error {
 	Logger.Infof("Downloading archive from %s", url)
 
-	req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, url, nil)
+	req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, url, http.NoBody)
 	if err != nil {
 		return err
 	}
@@ -67,6 +76,9 @@ func DownloadAndExtract(url, tmpDir, token string) error {
 	tarReader := tar.NewReader(gzr)
 	for {
 		header, err := tarReader.Next()
+		if strings.Contains(header.Name, "..") {
+			panic("tar file contained relative path which is not supported")
+		}
 		if err != nil {
 			if err == io.EOF {
 				return nil
@@ -83,7 +95,11 @@ func DownloadAndExtract(url, tmpDir, token string) error {
 		case tar.TypeReg:
 			target := filepath.Join(tmpDir, filepath.Clean(header.Name))
 			var f *os.File
-			f, err = os.OpenFile(target, os.O_CREATE|os.O_RDWR, os.FileMode(header.Mode))
+			mode, err := safeInt64ToUint32(header.Mode)
+			if err != nil {
+				return err
+			}
+			f, err = os.OpenFile(target, os.O_CREATE|os.O_RDWR, os.FileMode(mode))
 			if err != nil {
 				return err
 			}

@@ -21,9 +21,9 @@ import (
 	"crypto/x509"
 	"crypto/x509/pkix"
 	"fmt"
-	"io/ioutil"
 	"math/big"
 	"net"
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -35,11 +35,11 @@ import (
 
 // See https://github.com/rhaidiz/broxy/modules/coreproxy/coreproxy.go
 func setCa(caCertFile, caKeyFile string) error {
-	caCert, err := ioutil.ReadFile(caCertFile)
+	caCert, err := os.ReadFile(caCertFile)
 	if err != nil {
 		return errorsutil.New(fmt.Sprintf("Failed to read CA certificate file %s", caCertFile), err)
 	}
-	caKey, err := ioutil.ReadFile(caKeyFile)
+	caKey, err := os.ReadFile(caKeyFile)
 	if err != nil {
 		return errorsutil.New(fmt.Sprintf("Failed to read CA certificate key file %s", caCertFile), err)
 	}
@@ -98,7 +98,7 @@ func signHost(ca *tls.Certificate, host string) (cert *tls.Certificate, err erro
 	var template x509.Certificate
 
 	if x509ca, err = x509.ParseCertificate(ca.Certificate[0]); err != nil {
-		return
+		return cert, err
 	}
 
 	notBefore := time.Now()
@@ -132,12 +132,12 @@ func signHost(ca *tls.Certificate, host string) (cert *tls.Certificate, err erro
 
 	var certpriv *rsa.PrivateKey
 	if certpriv, err = rsa.GenerateKey(rand.Reader, 2048); err != nil {
-		return
+		return cert, err
 	}
 
 	derBytes, err := x509.CreateCertificate(rand.Reader, &template, x509ca, &certpriv.PublicKey, ca.PrivateKey)
 	if err != nil {
-		return
+		return cert, err
 	}
 
 	return &tls.Certificate{

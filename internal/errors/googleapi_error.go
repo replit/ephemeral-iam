@@ -50,7 +50,7 @@ func checkGoogleAPIError(err error) EiamError {
 			// TODO Check if message can be parsed from body.
 			errMsg = gerr.Body
 		}
-		return New(fmt.Sprintf("[Google API Error] %s", errStatusMsg), errors.New(errMsg)).(EiamError)
+		return New(fmt.Sprintf("[Google API Error] %s", errStatusMsg), errors.New(errMsg)).(EiamError) //nolint: errcheck
 	}
 	return EiamError{}
 }

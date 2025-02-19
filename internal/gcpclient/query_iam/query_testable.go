@@ -84,7 +84,7 @@ func QueryComputeInstancePermissions(
 	var computeService *compute.Service
 	if svcAcct != "" {
 		clientOptions := []option.ClientOption{
-			option.ImpersonateCredentials(svcAcct),
+			option.ImpersonateCredentials(svcAcct), //nolint: staticcheck
 			option.WithRequestReason(reason),
 		}
 		if svc, err := compute.NewService(ctx, clientOptions...); err == nil {
@@ -131,7 +131,7 @@ func QueryProjectPermissions(permsToTest []string, project, svcAcct, reason stri
 	var crmService *crm.Service
 	if svcAcct != "" {
 		clientOptions := []option.ClientOption{
-			option.ImpersonateCredentials(svcAcct),
+			option.ImpersonateCredentials(svcAcct), //nolint: staticcheck
 			option.WithRequestReason(reason),
 		}
 		if svc, err := crm.NewService(ctx, clientOptions...); err == nil {
@@ -186,7 +186,7 @@ func QueryPubSubPermissions(permsToTest []string, project, topic, svcAcct, reaso
 	var pubsubService *pubsub.Service
 	if svcAcct != "" {
 		clientOptions := []option.ClientOption{
-			option.ImpersonateCredentials(svcAcct),
+			option.ImpersonateCredentials(svcAcct), //nolint: staticcheck
 			option.WithRequestReason(reason),
 		}
 		if svc, err := pubsub.NewService(ctx, clientOptions...); err == nil {
@@ -241,7 +241,7 @@ func QueryStorageBucketPermissions(permsToTest []string, bucket, svcAcct, reason
 	var storageService *storage.Service
 	if svcAcct != "" {
 		clientOptions := []option.ClientOption{
-			option.ImpersonateCredentials(svcAcct),
+			option.ImpersonateCredentials(svcAcct), //nolint: staticcheck
 			option.WithRequestReason(reason),
 		}
 		if svc, err := storage.NewService(ctx, clientOptions...); err == nil {

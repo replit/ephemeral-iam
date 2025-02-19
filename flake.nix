@@ -2,7 +2,7 @@
   description = "Ephemeral IAM";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -13,11 +13,11 @@
      in {
         packages.default = pkgs.buildGoModule rec {
           pname = "ephemeral-iam";
-          version = "0.0.22";
+          version = "0.0.23";
 
           src = ./.;
 
-          vendorHash = "sha256-iJe97gPFTVmiFbHNEqhrA+xqFyXO8kz7K69wm8IJ+AE=";
+          vendorHash = "sha256-MA3ZDeXp+XvxMkUZ/OD4c7wSSQlPdJ1Ct3Vw+vN1ia8=";
 
           buildInputs = [ pkgs.makeWrapper ];
           postInstall = ''

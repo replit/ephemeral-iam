@@ -15,8 +15,8 @@
 package gcpclient
 
 import (
+	"errors"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"os/user"
 	"path"
@@ -84,7 +84,7 @@ func getActiveConfig(configDir string) (string, error) {
 		return activeConfig, nil
 	}
 
-	configFromFile, err := ioutil.ReadFile(activeConfigFile)
+	configFromFile, err := os.ReadFile(activeConfigFile)
 	if err != nil {
 		return "", errorsutil.New("Failed to get active gcloud config", err)
 	}
@@ -118,7 +118,7 @@ func setActiveConfig(configsDir, activeConfigFile string) (string, error) {
 	defer fd.Close()
 
 	util.Logger.Infof("Setting active gcloud config to %s", configName)
-	if _, err := fd.Write([]byte(configName)); err != nil {
+	if _, err := fd.WriteString(configName); err != nil {
 		return "", errorsutil.New("Failed to write gcloud config file", err)
 	}
 	return configName, nil
@@ -189,7 +189,7 @@ func CheckActiveAccountSet() (string, error) {
 	}
 	acct := gcloudConfig.Section("core").Key("account").String()
 	if acct == "" {
-		err := fmt.Errorf(dedent.Dedent(`no active account set for gcloud. please run:
+		err := errors.New(dedent.Dedent(`no active account set for gcloud. please run:
 		
 		$ gcloud auth login
 		

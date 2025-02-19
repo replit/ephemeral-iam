@@ -99,7 +99,7 @@ func loadPlugin(pf, pluginsDir string) (plugins.EIAMPlugin, *hcplugin.Client, er
 	if err != nil {
 		return nil, nil, err
 	}
-	return raw.(plugins.EIAMPlugin), client, nil
+	return raw.(plugins.EIAMPlugin), client, nil //nolint: errcheck
 }
 
 func addPluginCmd(p plugins.EIAMPlugin) (cmd *cobra.Command, name, desc, version string, err error) {

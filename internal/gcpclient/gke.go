@@ -19,8 +19,8 @@ import (
 	"fmt"
 
 	container "cloud.google.com/go/container/apiv1"
+	"cloud.google.com/go/container/apiv1/containerpb"
 	"google.golang.org/api/option"
-	containerpb "google.golang.org/genproto/googleapis/container/v1"
 
 	util "github.com/replit/ephemeral-iam/internal/eiamutil"
 	errorsutil "github.com/replit/ephemeral-iam/internal/errors"

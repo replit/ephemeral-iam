@@ -70,9 +70,11 @@ func checkGoogleRPCError(err error) EiamError {
 			for title, details := range errDetails {
 				errMsg += fmt.Sprintf("[%s]\n%s\n", title, details)
 			}
-			return New(errMsg, errField).(EiamError)
+			return New(errMsg, errField).(EiamError) //nolint: errcheck
 		}
-		return New("A gRPC error occurred. For more information, set the logging level to debug", errField).(EiamError)
+		return New( //nolint: errcheck
+			"A gRPC error occurred. For more information, set the logging level to debug",
+			errField).(EiamError)
 	}
 	return EiamError{}
 }
@@ -105,7 +107,7 @@ func parseRPCStatusDebugInfo(detail *anypb.Any) string {
 		if len(traces) > 0 {
 			fmt.Fprintf(&buf, "  Stack Trace:\n    %s", strings.Join(traces, "\n    "))
 		}
-		if len(details) > 0 {
+		if details != "" {
 			fmt.Fprintf(&buf, "  Details:\n    %s", details)
 		}
 	}
@@ -123,11 +125,11 @@ func parseRPCStatusErrorInfo(detail *anypb.Any) string {
 	} else {
 		domain := errInfo.GetDomain()
 		reason := errInfo.GetReason()
-		if len(domain) > 0 && len(reason) > 0 {
+		if domain != "" && reason != "" {
 			fmt.Fprintf(&buf, "  Reason:\n    %s: %s\n", domain, reason)
-		} else if len(domain) > 0 {
+		} else if domain != "" {
 			fmt.Fprintf(&buf, "  Domain:\n    %s\n", domain)
-		} else if len(reason) > 0 {
+		} else if reason != "" {
 			fmt.Fprintf(&buf, "  Reason:\n    %s\n", reason)
 		}
 

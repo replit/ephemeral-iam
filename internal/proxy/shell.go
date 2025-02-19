@@ -19,7 +19,6 @@ import (
 	"fmt"
 	"io"
 	"io/fs"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"os/signal"
@@ -159,7 +158,7 @@ func createTempKubeConfig() (*os.File, error) {
 func writeCredsToKubeConfig(tmpKubeConfig *os.File, accessToken, expiry string) error {
 	// Read the tmpKubeConfig into a client-go config object.
 	config := clientcmdapi.NewConfig()
-	configBytes, err := ioutil.ReadFile(tmpKubeConfig.Name())
+	configBytes, err := os.ReadFile(tmpKubeConfig.Name())
 	if err != nil {
 		return errorsutil.New("Failed to read generated tmp kubeconfig", err)
 	}

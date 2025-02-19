@@ -91,7 +91,7 @@ func newCmdPluginsInstall() *cobra.Command {
 			with. See 'eiam plugins auth --help' for more details.
 		`),
 		Args: func(cmd *cobra.Command, args []string) error {
-			urlRegex := regexp.MustCompile(`github\.com/(?P<user>[[:alnum:]\-]+)/(?P<repo>[[:alnum:]\.\-_]+)`)
+			urlRegex := regexp.MustCompile(`^github\.com/(?P<user>[[:alnum:]\-]+)/(?P<repo>[[:alnum:]\.\-_]+)$`)
 			match := urlRegex.FindStringSubmatch(url)
 			if match == nil {
 				err := fmt.Errorf("%s is not a valid Github repo URL", url)

@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 func MoveFile(src, dst string) error {
@@ -75,6 +76,9 @@ func DownloadAndExtract(url, tmpDir, token string) error {
 	tarReader := tar.NewReader(gzr)
 	for {
 		header, err := tarReader.Next()
+		if strings.Contains(header.Name, "..") {
+			panic("tar file contained relative path which is not supported")
+		}
 		if err != nil {
 			if err == io.EOF {
 				return nil

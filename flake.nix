@@ -17,7 +17,7 @@
 
           src = ./.;
 
-          vendorHash = "sha256-MA3ZDeXp+XvxMkUZ/OD4c7wSSQlPdJ1Ct3Vw+vN1ia8=";
+          vendorHash = "sha256-UWm+Nild+M7YRnPyiaZu8zcOGHcDAN4uDWbvK9WeKS0=";
 
           buildInputs = [ pkgs.makeWrapper ];
           postInstall = ''
